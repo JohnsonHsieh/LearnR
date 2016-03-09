@@ -1,0 +1,81 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch08：檔案讀取 - 基礎教學"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+## 讀取表格檔案
+- 下載範例資料
+  http://johnsonhsieh.github.io/dsp-introR/data/hsb.csv
+- 利用`read.csv` 讀取 `csv` 檔 (一種以逗點分隔欄位的資料格式)    
+
+```{r echo=TRUE, eval=FALSE}
+# 可以使用R指令來下載
+url <- "http://johnsonhsieh.github.io/dsp-introR/data/hsb.csv"
+download.file(url, destfile = "hsb.csv", method = "curl") # 把檔案另存成hbs.csv
+dat <- read.csv("hsb.csv")
+head(dat)
+```
+```{r}
+dat <- read.csv("hsb.csv")
+head(dat)
+```
+
+
+## 讀取表格檔案
+讀取自己電腦裡的csv檔
+```{r echo=TRUE, eval=FALSE}
+# 方法1. 透過介面選擇檔案所在路徑
+path <- file.choose()
+dat <- read.csv(path)
+
+# 方法2. 自行輸入檔案所在路徑
+path <- "/Volumes/LEEF SURGE/LearnR/hsb.csv"
+dat <- read.csv(path)
+
+# 方法3. 自行輸入檔案相對路徑
+dat <- read.csv("hsb.csv")
+```
+
+## 淺談路徑設定  
+- `getwd` 查詢目前所在的資料夾路徑 (絕對路徑)
+- `setwd` 設定所在的資料夾路徑 <br> (Session -> Set Working Directory -> Choose Directory)
+- 檔案 (檔案路徑 file directory) vs. 資料夾 (工作路徑 working directory)
+```{r echo=TRUE, eval=TRUE}
+getwd()
+setwd("/Volumes/LEEF SURGE/")
+dat <- read.csv("LearnR/hsb.csv")
+```
+
+## 輸出表格檔案
+利用`write.csv`將`data.frame`格式的R物件另存成csv檔
+```{r echo=TRUE, eval=FALSE}
+write.csv(dat, "hsb_new.csv")
+write.csv(dat, "hsb_new.csv", row.names=FALSE, quote=FALSE)
+```
+
+

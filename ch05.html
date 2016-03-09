@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch05_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch05_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch05_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch05：資料型態',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>R 的資料型態</h2></hgroup><article  id="r-">
+
+<ul>
+<li>R 包含三種基本資料型態 (<code>class</code>)：
+
+<ol>
+<li>數值 (<code>numeric</code>)： <code>x &lt;- c(174, 158, 160, 168, 173)</code></li>
+<li>字串 (<code>character</code>)： <code style="font-size: 88%">y &lt;- c(&quot;林志玲&quot;, &quot;蔡依林&quot;, &quot;楊丞琳&quot;, &quot;天心&quot;, &quot;隋棠&quot;) </code></li>
+<li>邏輯 (<code>logical</code>)： <code>z &lt;- c(TRUE, FALSE, FALSE, FALSE, TRUE)</code></li>
+</ol></li>
+<li>利用<code>class</code>函數判斷物件型態</li>
+<li><code>character</code> 內容以雙引號 (<code>&quot; &quot;</code>) 或單引號 (<code>&#39; &#39;</code>) 註記</li>
+<li><code>logical</code> 內容以<code>TRUE</code> / <code>FALSE</code> 註記，亦可簡化為 <code>T</code> / <code>F</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>class(x); class(y); class(z)</pre>
+
+<pre >[1] &quot;numeric&quot;</pre>
+
+<pre >[1] &quot;character&quot;</pre>
+
+<pre >[1] &quot;logical&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>資料型態的轉換</h2></hgroup><article  class="columns-2">
+
+<ul>
+<li>向量物件一次只能接受一種型態</li>
+<li>在向量中給定多種型態，將會依序自動轉換：字串 &gt; 數值 &gt; 邏輯。</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># 布林值 TRUE 被轉換成1，FALSE被轉換成0
+c(174, 52, TRUE) </pre>
+
+<pre >[1] 174  52   1</pre>
+
+<pre class = 'prettyprint lang-r'>c(1.1, 2.4, TRUE, FALSE)</pre>
+
+<pre >[1] 1.1 2.4 1.0 0.0</pre>
+
+<p><br></p>
+
+<pre class = 'prettyprint lang-r'>c(174, 52, &quot;林志玲&quot;) # 數值被轉換成字串</pre>
+
+<pre >[1] &quot;174&quot;    &quot;52&quot;     &quot;林志玲&quot;</pre>
+
+<pre class = 'prettyprint lang-r'># 所有元素都被轉換成字串
+c(&quot;林志玲&quot;, 174, 52, TRUE)</pre>
+
+<pre >[1] &quot;林志玲&quot; &quot;174&quot;    &quot;52&quot;     &quot;TRUE&quot;  </pre>
+
+</article></slide><slide class=''><hgroup><h2>資料型態的轉換2</h2></hgroup><article  id="2" class="columns-2">
+
+<ul>
+<li>利用以下函數自行轉換向量型態： <code>as.character</code>, <code>as.numeric</code>, <code>as.logical</code>。</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'># 字串轉數字
+a1 &lt;- c(&quot;89&quot;, &quot;91&quot;, &quot;102&quot;)
+as.numeric(a1)</pre>
+
+<pre >[1]  89  91 102</pre>
+
+<pre class = 'prettyprint lang-r'># 布林轉數字
+a2 &lt;- c(TRUE, TRUE, FALSE)
+as.numeric(a2)</pre>
+
+<pre >[1] 1 1 0</pre>
+
+<p><br></p>
+
+<pre class = 'prettyprint lang-r'># 數字轉布林
+a3 &lt;- c(-2, -1, 0, 1, 2) # 只有0會被轉成FALSE
+as.logical(a3)</pre>
+
+<pre >[1]  TRUE  TRUE FALSE  TRUE  TRUE</pre>
+
+<pre class = 'prettyprint lang-r'># 數字轉字串
+as.character(a3)</pre>
+
+<pre >[1] &quot;-2&quot; &quot;-1&quot; &quot;0&quot;  &quot;1&quot;  &quot;2&quot; </pre></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch05_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch05_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch01：為何要學 R 語言？"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+
+
+## R 是專門為資料分析而設計的程式語言 {.smaller .centered}
+<img src='img/statician_10521919-655x280.jpg' style='width: 960px'></img>
+<h3>R 可以執行大多數的統計計算、機器學習、資料採礦方法</h3>
+取自 <http://goo.gl/CkXlvY>
+
+## 免費、開源、豐沛的社群資源 {.smaller .columns-2 .centered}
+<img src='img/fig_8_cran.png' style='height: 400px'></img>
+<h3>很容易擴充和客製化</h3>
+取自 <http://goo.gl/AwfHLx>
+
+<img src='img/r-integration-1.png' style='height: 400px'></img>
+<h3>很容易和其他工具做整合</h3>
+取自 <http://goo.gl/jvNnG3>
+
+## R 可以輸出高品質的視覺化 {.smaller .centered}
+
+<img src='img/flights_sml.jpg' style='width: 960px'></img>
+
+取自 <http://goo.gl/q1NX26>
+
+
+## R語言探索之旅的課程目標
+
+<ul style="font-size: 120%">
+<li>建立 R 的使用環境 (Ch02)</li>
+<li>熟悉 R 語言基礎操作 (Ch03-04)</li>
+<li>了解 R 語言的物件結構 (Ch04-08)</li>
+<li>學習 R 語言的資料整理 (Ch09)</li>
+<li>從無到有，完成探索性資料分析 (Ch10-13)</li>
+</ul>
+

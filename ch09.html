@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch09_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch09_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch09_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch09：資料整理',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>排序 (<code>sort</code> vs. <code>order</code>)</h2></hgroup><article  id="-sort-vs.-order">
+
+<ul>
+<li><code>sort</code>: 將一數列由小排到大</li>
+<li><code>order</code>: 回傳數列個元素的大小順序</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(1, 5, 3, 7)
+sort(x)</pre>
+
+<pre >[1] 1 3 5 7</pre>
+
+<pre class = 'prettyprint lang-r'>order(x)</pre>
+
+<pre >[1] 1 3 2 4</pre>
+
+<pre class = 'prettyprint lang-r'>x[order(x)] # 等價於 sort(x)</pre>
+
+<pre >[1] 1 3 5 7</pre>
+
+<pre class = 'prettyprint lang-r'>sort(x, decreasing = TRUE) # 由大排到小</pre>
+
+<pre >[1] 7 5 3 1</pre>
+
+</article></slide><slide class=''><hgroup><h2>排序</h2></hgroup><article >
+
+<p><code>order</code> 可以處理多欄位的排序</p>
+
+<pre class = 'prettyprint lang-r'>df &lt;- data.frame(x=c(1, 1, 3, 3), 
+                 y=c(2, 4, 2, 4))
+df[order(df$x, df$y),]</pre>
+
+<pre >  x y
+1 1 2
+2 1 4
+3 3 2
+4 3 4</pre>
+
+<pre class = 'prettyprint lang-r'>df[order(df$y, df$x),]</pre>
+
+<pre >  x y
+1 1 2
+3 3 2
+2 1 4
+4 3 4</pre>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article >
+
+<ul>
+<li>拿高校資料集 (hsb.csv)，用學生的 <code>id</code> 對資料表做排序</li>
+<li>用學生的<code>id</code>, 還有閱讀、寫作、數學、科學的總分 (<code>read + write + math + science</code>) 做排序</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>資料轉換 (Recoding Data)</h2></hgroup><article  id="-recoding-data">
+
+<ul>
+<li><code>rowSums</code>：給定資料表，快速計算資料的列總和 (同理有<code>colSums</code> 計算欄總和)</li>
+<li>利用<code>$colname</code> 新增欄位</li>
+<li>學習<code>cut</code>函數將數值資料轉成類別資料</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>dat$total &lt;- rowSums(dat[,7:10]) # read + write + math + science
+dat$grade &lt;- cut(dat$total,
+  breaks = c(0, 140, 180, 210, 234, 300),
+  labels = c(&quot;F&quot;, &quot;D&quot;, &quot;C&quot;, &quot;B&quot;, &quot;A&quot;))
+summary(dat[, c(&quot;total&quot;, &quot;grade&quot;)])</pre>
+
+<pre >     total       grade 
+ Min.   :139.0   F: 1  
+ 1st Qu.:180.0   D:51  
+ Median :210.0   C:50  
+ Mean   :209.5   B:49  
+ 3rd Qu.:234.0   A:49  
+ Max.   :277.0         </pre>
+
+</article></slide><slide class=''><hgroup><h2>資料合併</h2></hgroup><article >
+
+<ul>
+<li><code>rbind</code>: 列合併 (rows combine)</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>dat1 &lt;- dat[dat$id&lt;5, c(1, 2, 7:10)]
+dat2 &lt;- dat[dat$id&gt;=5 &amp; dat$id&lt;10, c(1, 2, 7:10)]
+rbind(dat1, dat2)</pre>
+
+<pre >    id    sex read write math science
+84   3   male   63    65   48      63
+99   1 female   34    44   40      39
+112  4 female   44    50   41      39
+139  2 female   39    41   33      42
+50   7   male   57    54   59      47
+60   9   male   48    49   52      44
+76   5   male   47    40   43      45
+94   8 female   39    44   52      44
+149  6 female   47    41   46      40</pre>
+
+</article></slide><slide class=''><hgroup><h2>資料合併</h2></hgroup><article  id="-1">
+
+<ul>
+<li><code>cbind</code>: 行合併 (columns combine), 也可以使用<code>data.frame</code>來做欄位合併</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>dat3 &lt;- dat[dat$id&lt;10, 1:2]
+dat4 &lt;- dat[dat$id&lt;10, 7:10]
+cbind(dat3, dat4)</pre>
+
+<pre >    id    sex read write math science
+50   7   male   57    54   59      47
+60   9   male   48    49   52      44
+76   5   male   47    40   43      45
+84   3   male   63    65   48      63
+94   8 female   39    44   52      44
+99   1 female   34    44   40      39
+112  4 female   44    50   41      39
+139  2 female   39    41   33      42
+149  6 female   47    41   46      40</pre></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch09_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch09_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

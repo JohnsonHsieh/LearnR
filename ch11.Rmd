@@ -1,0 +1,82 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch11：樞紐分析"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+```{r}
+dat <- read.csv(file = "hsb.csv")
+```
+
+## 次數列聯表 {.columns-2}
+用`table`計算資料個類別出現的次數
+```{r echo=TRUE}
+table(dat$sex)
+table(dat$prog)
+table(dat$race, dat$sex)
+```
+
+## Long & Wide format
+- Wide format 人習慣看的表格
+- Long format 機器習慣看的表格
+<br>
+<center>
+<img src='img/wide-long.png' style='width: 960px'></img>
+</center>
+
+## Wide format 互轉 Long format
+- 利用`reshape2`套件中的`melt`函數做 wide 轉 long
+- 利用`reshape2`套件中的`dcast`函數做 long 轉 wide
+```{r echo=TRUE, eval=FALSE}
+install.packages("reshape2") # 安裝R套件
+library(reshape2) # 載入R套件
+df <- melt(dat, id.vars = c("id", "sex", "race"), 
+     measure.vars = c("read","write","math","science"))
+# dcast(df, id+sex+race~variable, value.var="value")
+head(df)
+```
+```{r}
+library(reshape2) # 載入R套件
+df <- melt(dat, id.vars = c("id", "sex", "race"), 
+     measure.vars = c("read","write","math","science"))
+head(df)
+```
+
+## 樞紐分析表
+- 又稱交叉分析表
+- 能夠快速合併和大量比較資料的互動格式
+```{r echo=TRUE}
+dcast(data=df, formula=sex~variable, fun.aggregate=mean, value.var="value")
+
+dcast(df, sex+variable~., mean, value.var = "value")
+```
+
+## 小挑戰
+拿"hsb.csv"資料，以`race`為列(rows)、`sex`為行(colums)、`math`平均分數為值(vlaue) 製作出如下的樞紐分析表
+```{r}
+dcast(df, race~sex, mean, value="math")
+```

@@ -1,0 +1,60 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch04：查詢說明檔"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+## 在 R 中查詢說明文件 {.columns-2}
+
+各種自救措施
+```{r echo=TRUE, eval=FALSE}
+help.start()
+ab # 輸入`ab`後 按下tab
+?abs   # 等同於 help(abs)
+??abs 
+apropos("abs")
+example(abs)
+vignette()
+vignette("Introduction", "Matrix")
+```
+<br>
+<br>
+<p>
+<br>
+<br>
+<p>
+<p>
+
+### 筆記
+- help.start: 說明檔首頁
+- 自動完成 (tab鍵)：列出所有`ab`開頭的函數
+- ? (一個問號)：查詢特定函數的說明檔
+- ?? (兩個問號)：查詢包含特定關鍵字的說明檔
+- apropos : 查詢包含特定關鍵字的函數
+- example : 執行特定函數的使用範例
+- vignette : 查詢R環境中各種介紹文件
+

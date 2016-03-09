@@ -1,0 +1,64 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch02：建立 R 的使用環境"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+
+## 傢俬準備好 {.columns-2}
+
+### 環境安裝
+- 主程式：[R](https://www.r-project.org/)（R-3.2.2 以上版本）
+- 編輯界面：[RStudio IDE](https://www.rstudio.com/products/rstudio/)（0.99.473 以上版本）
+- [疑難排解指南](https://github.com/dspim/R/wiki/R-&-RStudio-Troubleshooting-Guide)
+<br>
+<br>
+<br>
+
+
+### RStudio 界面說明
+- 程式碼編輯區
+- 命令列區
+- 環境資訊區
+- 檔案系統區
+
+
+## 熟悉 RStudio 的 **命令列** 界面
+### 程式的**輸入**、**輸出**、**中斷**
+
+- 左下角的當符號 `>` 表示可以輸入指令
+- 輸入 `1 + 1` 後按下 **Enter**，檢查螢幕輸出
+- 輸入 `1 +  ` 後按下 **Enter**，檢查螢幕輸出 <br> 最左下角的開頭變成 `+` 表示尚未輸入完成，應繼續輸入
+- 按下 **ESC**，會中斷執行中的程式 (左下角回復成 `>` 開頭)
+
+
+## 熟悉 RStudio 的 **程式碼編輯** 界面
+### 停留時間最多的區域
+- **New File -> R Script -> Untiled1.R**
+- 在程式碼編輯區中輸入 `1 + 1` 後按下 **Control + Enter**，檢查 命令列區
+- 在程式碼編輯區中輸入 `1 + ` 後按下 **Control + Enter**，檢查 命令列區
+- 在命令列區按下 **ESC** 中斷程式

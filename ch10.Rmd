@@ -1,0 +1,68 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch10：敘述統計"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+```{r}
+dat <- read.csv(file = "hsb.csv")
+```
+
+## 常用敘述統計函數
+### 單一變數
+- 平均數：`mean`
+- 標準差：`sd`
+- 範圍：`min, max, range`
+- 百分比：`quantile`
+- 摘要：`summary`
+
+### 雙變數
+- 相關係數：`cor(x, y)`
+- 距離： `dist(x, y)`
+
+## 敘述統計量
+```{r echo=TRUE}
+dat$read[1:10]
+mean(dat$read)
+sd(dat$read)
+range(dat$read)
+```
+
+## 敘述統計量 {.smaller}
+利用`summary`函數對資料有概略性的了解
+```{r echo=TRUE}
+summary(dat)
+```
+
+## 敘述統計量 {.smaller}
+比較欄位之間的關聯性
+```{r echo=TRUE}
+score <- dat[, c("read", "write", "math", "science", "socst")]
+cor(score)     # correlation
+dist(t(score)) # distance
+```
+

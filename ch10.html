@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch10_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch10_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch10_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch10：敘述統計',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>常用敘述統計函數</h2></hgroup><article >
+
+<h3>單一變數</h3>
+
+<ul>
+<li>平均數：<code>mean</code></li>
+<li>標準差：<code>sd</code></li>
+<li>範圍：<code>min, max, range</code></li>
+<li>百分比：<code>quantile</code></li>
+<li>摘要：<code>summary</code></li>
+</ul>
+
+<h3>雙變數</h3>
+
+<ul>
+<li>相關係數：<code>cor(x, y)</code></li>
+<li>距離： <code>dist(x, y)</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>敘述統計量</h2></hgroup><article >
+
+<pre class = 'prettyprint lang-r'>dat$read[1:10]</pre>
+
+<pre > [1] 57 68 44 63 47 44 50 34 63 57</pre>
+
+<pre class = 'prettyprint lang-r'>mean(dat$read)</pre>
+
+<pre >[1] 52.23</pre>
+
+<pre class = 'prettyprint lang-r'>sd(dat$read)</pre>
+
+<pre >[1] 10.25294</pre>
+
+<pre class = 'prettyprint lang-r'>range(dat$read)</pre>
+
+<pre >[1] 28 76</pre>
+
+</article></slide><slide class=''><hgroup><h2>敘述統計量</h2></hgroup><article  id="-1" class="smaller">
+
+<p>利用<code>summary</code>函數對資料有概略性的了解</p>
+
+<pre class = 'prettyprint lang-r'>summary(dat)</pre>
+
+<pre >       id             sex                    race          ses       
+ Min.   :  1.00   female:109   African American: 20   Min.   :1.000  
+ 1st Qu.: 50.75   male  : 91   Asian           : 11   1st Qu.:2.000  
+ Median :100.50                Hispanic        : 24   Median :2.000  
+ Mean   :100.50                White           :145   Mean   :2.055  
+ 3rd Qu.:150.25                                       3rd Qu.:3.000  
+ Max.   :200.00                                       Max.   :3.000  
+     schtyp            prog          read           write      
+ private: 32   academic  :105   Min.   :28.00   Min.   :31.00  
+ public :168   general   : 45   1st Qu.:44.00   1st Qu.:45.75  
+               vocational: 50   Median :50.00   Median :54.00  
+                                Mean   :52.23   Mean   :52.77  
+                                3rd Qu.:60.00   3rd Qu.:60.00  
+                                Max.   :76.00   Max.   :67.00  
+      math          science          socst      
+ Min.   :33.00   Min.   :26.00   Min.   :26.00  
+ 1st Qu.:45.00   1st Qu.:44.00   1st Qu.:46.00  
+ Median :52.00   Median :53.00   Median :52.00  
+ Mean   :52.65   Mean   :51.85   Mean   :52.41  
+ 3rd Qu.:59.00   3rd Qu.:58.00   3rd Qu.:61.00  
+ Max.   :75.00   Max.   :74.00   Max.   :71.00  </pre>
+
+</article></slide><slide class=''><hgroup><h2>敘述統計量</h2></hgroup><article  id="-2" class="smaller">
+
+<p>比較欄位之間的關聯性</p>
+
+<pre class = 'prettyprint lang-r'>score &lt;- dat[, c(&quot;read&quot;, &quot;write&quot;, &quot;math&quot;, &quot;science&quot;, &quot;socst&quot;)]
+cor(score)     # correlation</pre>
+
+<pre >             read     write      math   science     socst
+read    1.0000000 0.5967765 0.6622801 0.6301579 0.6214843
+write   0.5967765 1.0000000 0.6174493 0.5704416 0.6047932
+math    0.6622801 0.6174493 1.0000000 0.6307332 0.5444803
+science 0.6301579 0.5704416 0.6307332 1.0000000 0.4651060
+socst   0.6214843 0.6047932 0.5444803 0.4651060 1.0000000</pre>
+
+<pre class = 'prettyprint lang-r'>dist(t(score)) # distance</pre>
+
+<pre >            read    write     math  science
+write   125.5986                           
+math    114.4596 116.3013                  
+science 122.4582 127.4794 117.5372         
+socst   128.9767 127.8593 136.4478 151.0927</pre></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch10_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch10_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

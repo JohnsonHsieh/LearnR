@@ -1,0 +1,73 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch12：基本統計圖形"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+```{r}
+dat <- read.csv(file = "hsb.csv")
+```
+
+## 圓餅圖與長條圖 {.columns-2}
+圓餅圖：`pie`
+```{r echo=TRUE, fig.width=4.5}
+pie(sort(table(dat$race), decreasing = TRUE))
+```
+
+長條圖：`barplot`
+```{r echo=TRUE, fig.width=4.5}
+barplot(sort(table(dat$prog), decreasing = TRUE))
+```
+
+## 直方圖 (Histograms)
+```{r echo=TRUE}
+hist(dat$read, breaks=10, col="lightblue", prob=TRUE)
+lines(density(dat$read, bw=4), col=2, lwd=2)
+```
+
+## 小挑戰
+- 改變 hist() 函數中的breaks參數，觀察直方圖的變化
+- 改變 density() 函數中的bw參數，觀察機率密度函數的變化
+```{r}
+par(mfrow=c(2,2))
+hist(dat$read, breaks=5, col="lightblue", prob=TRUE, main="break=5")
+hist(dat$read, breaks=10, col="lightblue", prob=TRUE, main="break=10")
+
+hist(dat$read, breaks=10, col="lightblue", prob=TRUE, main="bw=4")
+lines(density(dat$read, bw=4), col=2, lwd=2)
+hist(dat$read, breaks=10, col="lightblue", prob=TRUE, main="bw=1")
+lines(density(dat$read, bw=1), col=2, lwd=2)
+```
+
+## 散佈圖 {.columns-2}
+```{r echo=TRUE, fig.width=4.5}
+plot(x=dat$write, y=dat$science, pch=19, col=2)
+```
+
+```{r echo=TRUE, fig.width=4.5}
+plot(x=dat$math, y=dat$science, xlab="math", ylab="science")
+```

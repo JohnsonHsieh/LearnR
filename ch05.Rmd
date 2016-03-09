@@ -1,0 +1,92 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch05：資料型態"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+## R 的資料型態
+
+- R 包含三種基本資料型態 (`class`)：
+    1. 數值 (`numeric`)： `x <- c(174, 158, 160, 168, 173)`
+    2. 字串 (`character`)： <code style="font-size: 88%">y <- c("林志玲", "蔡依林", "楊丞琳", "天心", "隋棠") </code>
+    3. 邏輯 (`logical`)： `z <- c(TRUE, FALSE, FALSE, FALSE, TRUE)`
+- 利用`class`函數判斷物件型態
+- `character` 內容以雙引號 (`" "`) 或單引號 (`' '`) 註記 
+- `logical` 內容以`TRUE` / `FALSE` 註記，亦可簡化為 `T` / `F`
+
+```{r echo=FALSE}
+# numeric vector
+x <- c(174, 158, 160, 168, 173)  # 身高資料
+# character vector，以雙引號 " " 或單引號 ' ' 註記 
+y <- c("林志玲", "蔡依林", "楊丞琳", "天心", "隋棠") 
+# logical vector，以TRUE / FALSE 註記，亦可簡化為 T / F
+z <- c(TRUE, FALSE, FALSE, FALSE, TRUE)
+```
+```{r echo=TRUE}
+class(x); class(y); class(z)
+```
+
+## 資料型態的轉換 {.columns-2}
+- 向量物件一次只能接受一種型態
+- 在向量中給定多種型態，將會依序自動轉換：字串 > 數值 > 邏輯。
+
+```{r echo=TRUE, eval=T}
+# 布林值 TRUE 被轉換成1，FALSE被轉換成0
+c(174, 52, TRUE) 
+c(1.1, 2.4, TRUE, FALSE)
+
+```
+<br>
+```{r echo=TRUE, eval=T}
+c(174, 52, "林志玲") # 數值被轉換成字串
+
+# 所有元素都被轉換成字串
+c("林志玲", 174, 52, TRUE)
+```
+
+## 資料型態的轉換2 {.columns-2}
+
+- 利用以下函數自行轉換向量型態： `as.character`, `as.numeric`, `as.logical`。
+
+```{r echo=TRUE, eval=TRUE}
+# 字串轉數字
+a1 <- c("89", "91", "102")
+as.numeric(a1)
+
+# 布林轉數字
+a2 <- c(TRUE, TRUE, FALSE)
+as.numeric(a2)
+```
+<br>
+```{r echo=TRUE, eval=TRUE}
+# 數字轉布林
+a3 <- c(-2, -1, 0, 1, 2) # 只有0會被轉成FALSE
+as.logical(a3)
+
+# 數字轉字串
+as.character(a3)
+```

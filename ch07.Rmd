@@ -1,0 +1,78 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch07：資料表"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+## 資料表 `data.frame`
+
+- `data.frame` 是資料分析時最基本的物件
+- `R` 提供將外部資料轉成 `data.frame` 的功能
+- 透過`data.frame` 可以進行以下功能：
+    - 資料的整理
+    - 圖形的繪製
+    - 模型的配適與預測
+
+
+## 世界上最常見的範例資料 `iris`  
+```{r echo=TRUE, eval=T}
+data("iris")
+head(iris) # 列出前幾筆資料, 預設6筆
+dim(iris)  # 列出資料表的 rows and columns
+```
+
+## 表格的取值 - 座標
+- 類似於向量取值，在中括號 `[i, j]` 中進行取值
+- 逗號的前後分別表示資料表的 row and column
+```{r echo=TRUE}
+iris[2, 3]
+iris[1:6, 1:3]
+```
+
+## 表格的取值 - 列
+欲選取第i筆觀察資料時，使用 `[i, ]` 在column欄位留白
+```{r echo=TRUE}
+iris[2, ]
+iris[c(1, 51, 101),]
+```
+
+## 表格的取值 - 欄
+欲選取整欄資料時，有三種常用方法
+```{r echo=TRUE, eval=FALSE}
+iris[,1] # 欄位名稱未知
+iris$Sepal.Length # 已知欄位名稱
+iris[["Sepal.Length"]] # 已知欄位名稱 
+```
+```{r}
+iris[["Sepal.Length"]]
+```
+
+## 表格的取值 - 篩選
+利用條件式做篩選
+```{r echo=TRUE}
+iris[iris$Sepal.Length > 5.5 & iris$Species=="setosa", ]
+```

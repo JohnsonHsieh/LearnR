@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch13_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch13_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch13_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch13：終章',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>課程回顧</h2></hgroup><article  class="columns-2">
+
+<ul>
+<li>建立 R 的使用環境 (Ch01-02)
+
+<ul>
+<li>RStudio介面、tab鍵</li>
+</ul></li>
+<li>熟悉 R 語言基礎操作 (Ch03-04)
+
+<ul>
+<li>向量的運算、<code>[]</code>取值、<code>?</code>查詢說明</li>
+</ul></li>
+<li>了解 R 語言的物件的結構 (Ch05-07)
+
+<ul>
+<li>數值、字串、邏輯型態</li>
+<li><code>data.frame</code>資料表 <br><br><br></li>
+</ul></li>
+<li>學習 R 語言的資料整理 (Ch08-09)
+
+<ul>
+<li>file path, <code>read.csv</code>, <code>write.csv</code></li>
+<li><code>sort</code>, <code>order</code>, <code>rbind</code>, <code>cbind</code></li>
+</ul></li>
+<li>從無到有，完成探索性資料分析 (Ch10-12)
+
+<ul>
+<li><code>mean</code>, <code>sd</code>, <code>summary</code>, &#8230;</li>
+<li><code>table</code>, <code>melt</code>, <code>dcast</code></li>
+<li><code>pie</code>、<code>barplot</code>、<code>hist</code>、<code>plot</code></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>繼續學習之路</h2></hgroup><article >
+
+<ul>
+<li>了解自己的需求，詢問關鍵字與函數</li>
+<li><a href='http://www.meetup.com/Taiwan-R' title=''>Taiwan R User Group</a>，mailing list: <a href='mailto:Taiwan-useR-Group-list@meetup.com' title=''>Taiwan-useR-Group-list@meetup.com</a></li>
+<li><a href='https://www.ptt.cc/bbs/R_Language/index.html' title=''>ptt R_Language版</a></li>
+<li><a href='https://groups.google.com/forum/#!forum/taiwanruser' title=''>R軟體使用者論壇</a></li>
+<li><a href='http://stackoverflow.com/' title=''>StackOverflow</a></li>
+<li>歡迎來信 <a href='mailto:johnson@dsp.im' title=''>johnson@dsp.im</a> 或其他DSP優秀教師多多交流</li>
+</ul></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch13_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch13_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

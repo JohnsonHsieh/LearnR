@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch03-2_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch03-2_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch03-2_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch03：基礎教學 - 數列的運算',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>數列的運算</h2></hgroup><article  class="columns-2">
+
+<p>R的數列運算滿足 <strong>recycling properties</strong></p>
+
+<pre class = 'prettyprint lang-r'>c(1, 2, 3) * c(2, 2, 2)</pre>
+
+<pre >[1] 2 4 6</pre>
+
+<pre class = 'prettyprint lang-r'># shorter arguments are recycled
+1:3 * 2</pre>
+
+<pre >[1] 2 4 6</pre>
+
+<pre class = 'prettyprint lang-r'>c(0.5, 1.5, 2.5, 3.5) * c(2, 1)</pre>
+
+<pre >[1] 1.0 1.5 5.0 3.5</pre>
+
+<p>
+
+<h3>小挑戰</h3>
+
+<p>向量的四則運算，請計算以下五位女藝人的BMI</p>
+
+<p>Hint: BMI = 體重 / (身高/100)^2</p>
+
+<pre class = 'prettyprint lang-r'>height &lt;- c(174, 158, 160, 168, 173)
+weight &lt;- c(52, 39, 42, 46, 48)</pre>
+
+<aside class='note'><section><pre class = 'prettyprint lang-r'>height &lt;- c(174, 158, 160, 168, 173)
+weight &lt;- c(52, 39, 42, 46, 48)
+weight/ (height/100)^2</pre>
+
+<pre >[1] 17.17532 15.62250 16.40625 16.29819 16.03796</pre></section></aside>
+
+</article></slide><slide class=''><hgroup><h2>向量的取值</h2></hgroup><article  class="columns-2">
+
+<ul>
+<li>在<code>[ ]</code> (中括號) 中輸入元素的位置進行取值</li>
+<li>使負號 (<code>-</code>) 移除給定位置元素 (反向選取)</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(174, 158, 160, 168, 173)
+x[1]           # 選取第1個位置的元素</pre>
+
+<pre >[1] 174</pre>
+
+<pre class = 'prettyprint lang-r'>x[c(1, 3)]     # 選取第1, 3個位置的元素</pre>
+
+<pre >[1] 174 160</pre>
+
+<pre class = 'prettyprint lang-r'>x[c(2, 3, 1)]  # 依序取值</pre>
+
+<pre >[1] 158 160 174</pre>
+
+<pre class = 'prettyprint lang-r'># 在[ ]中使用負號 (-) 做反向選取
+x[-1]</pre>
+
+<pre >[1] 158 160 168 173</pre>
+
+<pre class = 'prettyprint lang-r'>x[-c(1, 3, 4)]</pre>
+
+<pre >[1] 158 173</pre>
+
+</article></slide><slide class=''><hgroup><h2>向量的取值2</h2></hgroup><article  id="2" class="columns-2">
+
+<p>給定條件進行取值</p>
+
+<ul>
+<li>比較運算子(<code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>)</li>
+<li>邏輯運算子 (<code>&amp;</code>, <code>|</code>)</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &gt; 160</pre>
+
+<pre >[1]  TRUE FALSE FALSE  TRUE  TRUE</pre>
+
+<pre class = 'prettyprint lang-r'># 使用比較運算子 加上 `which` 函數進行取值
+index &lt;- which(x &gt; 160) 
+index </pre>
+
+<pre >[1] 1 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>x[index]</pre>
+
+<pre >[1] 174 168 173</pre>
+
+<pre class = 'prettyprint lang-r'># 指令壓縮，將指令寫在 [ ] 中，以達到縮短程式碼的功效
+x[which(x &gt; 160)]</pre>
+
+<pre >[1] 174 168 173</pre>
+
+<pre class = 'prettyprint lang-r'># 配合邏輯算子進行多條件的取值
+x[which(x &gt; 160 &amp; x &lt; 175)]</pre>
+
+<pre >[1] 174 168 173</pre>
+
+<pre class = 'prettyprint lang-r'># 可以省略 which
+x[x &gt; 160 &amp; x &lt; 175]</pre>
+
+<pre >[1] 174 168 173</pre>
+
+</article></slide><slide class=''><hgroup><h2>向量的取代</h2></hgroup><article  class="columns-2">
+
+<ul>
+<li>利用 <code>[ ]</code> (中括號) 與 <code>&lt;-</code> (箭號) 進行取代與新增元素</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(174, 158, 160, 168, 173)
+
+# 取代特定位置的元素
+x[2] &lt;- 158.5 # 取代x物件的第二個元素
+x</pre>
+
+<pre >[1] 174.0 158.5 160.0 168.0 173.0</pre>
+
+<pre class = 'prettyprint lang-r'>x[c(1, 5)] &lt;- 175 
+x</pre>
+
+<pre >[1] 175.0 158.5 160.0 168.0 175.0</pre>
+
+<p>
+
+<pre class = 'prettyprint lang-r'># 也可以用條件篩選做取代
+x[x &gt; 160] &lt;- 170 # 取代大於160的值為170
+x</pre>
+
+<pre >[1] 170.0 158.5 160.0 170.0 170.0</pre>
+
+</article></slide><slide class=''><hgroup><h2>向量新增</h2></hgroup><article  class="columns-2">
+
+<p>可用 <code>[ ]</code> (中括號) 與 <code>&lt;-</code> (箭號) 進行新增元素 - <code>NA</code> 為系統保留字，表示Not Available / Missing Values</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(174, 158, 160, 168, 173)
+# 在 [ ] 中新增元素
+x[6] &lt;- 168
+x</pre>
+
+<pre >[1] 174 158 160 168 173 168</pre>
+
+<pre class = 'prettyprint lang-r'>x[8] &lt;- 147
+x # 未指定的元素值預設為NA</pre>
+
+<pre >[1] 174 158 160 168 173 168  NA 147</pre>
+
+<pre class = 'prettyprint lang-r'>length(x) # 查看向量物件的長度</pre>
+
+<pre >[1] 8</pre>
+
+<pre class = 'prettyprint lang-r'>x[length(x) + 1] &lt;- 166 # 接續增加新元素</pre></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch03-2_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch03-2_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

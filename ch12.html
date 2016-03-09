@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R 語言的探索之旅</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" media="all" href="ch12_files/ioslides-13.5.1/fonts/fonts.css">
+
+  <link rel="stylesheet" media="all" href="ch12_files/ioslides-13.5.1/theme/css/default.css">
+  <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="ch12_files/ioslides-13.5.1/theme/css/phone.css">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'R 語言的探索之旅',
+                        subtitle: 'Ch12：基本統計圖形',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'Johnson Ph.D. (DSP 智庫驅動 資料科學家)' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="css/dsp.css" type="text/css" />
+
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>圓餅圖與長條圖</h2></hgroup><article  class="columns-2">
+
+<p>圓餅圖：<code>pie</code></p>
+
+<pre class = 'prettyprint lang-r'>pie(sort(table(dat$race), decreasing = TRUE))</pre>
+
+<p><img src="ch12_files/figure-html/unnamed-chunk-2-1.png" title="" alt="" width="432" /></p>
+
+<p>長條圖：<code>barplot</code></p>
+
+<pre class = 'prettyprint lang-r'>barplot(sort(table(dat$prog), decreasing = TRUE))</pre>
+
+<p><img src="ch12_files/figure-html/unnamed-chunk-3-1.png" title="" alt="" width="432" /></p>
+
+</article></slide><slide class=''><hgroup><h2>直方圖 (Histograms)</h2></hgroup><article  id="-histograms">
+
+<pre class = 'prettyprint lang-r'>hist(dat$read, breaks=10, col=&quot;lightblue&quot;, prob=TRUE)
+lines(density(dat$read, bw=4), col=2, lwd=2)</pre>
+
+<p><img src="ch12_files/figure-html/unnamed-chunk-4-1.png" title="" alt="" width="720" /></p>
+
+</article></slide><slide class=''><hgroup><h2>小挑戰</h2></hgroup><article >
+
+<ul>
+<li>改變 hist() 函數中的breaks參數，觀察直方圖的變化</li>
+<li>改變 density() 函數中的bw參數，觀察機率密度函數的變化 <img src="ch12_files/figure-html/unnamed-chunk-5-1.png" title="" alt="" width="720" /></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>散佈圖</h2></hgroup><article  class="columns-2">
+
+<pre class = 'prettyprint lang-r'>plot(x=dat$write, y=dat$science, pch=19, col=2)</pre>
+
+<p><img src="ch12_files/figure-html/unnamed-chunk-6-1.png" title="" alt="" width="432" /></p>
+
+<pre class = 'prettyprint lang-r'>plot(x=dat$math, y=dat$science, xlab=&quot;math&quot;, ylab=&quot;science&quot;)</pre>
+
+<p><img src="ch12_files/figure-html/unnamed-chunk-7-1.png" title="" alt="" width="432" /></p></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<script src="ch12_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/hammer.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/slide-controller.js"></script>
+<script src="ch12_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

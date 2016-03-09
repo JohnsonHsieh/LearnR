@@ -1,0 +1,120 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch03：基礎教學 - 敘述句與數列"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+
+## 敘述句 {.columns-2}
+
+```{r, echo = TRUE}
+1
+2
+1; 2
+``` 
+<br>
+<p>
+<br>
+<p>
+<p>
+
+### 筆記
+- 灰底的區塊為程式碼 (輸入)，[1] 為運算結果 (輸出)
+- 敘述句以**斷行 (Enter)** 或**分號 ( ; )** 作結尾
+- 未完成的敘述句，命令列開頭會變成 `+`
+- 可以用 **Esc** 中斷敘述句
+- R 會把單引號 `'apple'` 或雙引號 `"book"` 所包覆的敘述當成字串
+
+## 敘述句2 {.columns-2}
+
+```{r echo=TRUE}
+# 基礎運算
+1 + 2 + 3
+1 +       2 + 3
+x <- 10
+y <- 4
+(x + y) / 2 # 簡單的公式運算
+```
+<br>
+<p>
+<p>
+<br>
+
+### 筆記
+- 基本數學運算符號 (`+`, `-`, `*`, `/`, ...)
+- 空白 (**space**) 不影響程式執行
+- 箭號 (`<-`) 表示賦值，把箭號右邊的結果指向到R物件
+- 井號 (**#**) 表示註解，使得該行不執行運算
+- 在RStudio中，想要一次註解多行可用 **ctrl + shift + c**
+- 在命令列中按 **ctrl + l** 可以清除當前畫面
+
+## 最基礎的物件：數值型向量 (數列) {.columns-2}
+```{r echo=TRUE}
+# basic expression of integer vector
+c(1, 2, 3, 4)
+
+# simple expression
+1:4
+4:1
+```
+<br>
+<p>
+<p>
+### 筆記
+- 以 `c(...)` 表示 (c 取自combine之意), 元素以逗號分隔。
+- 連續整數向量可以利用 `:` (冒號) 簡記，譬如數列 (1, 2, 3, 4) 在 R 語言中可利用 `1:4` 簡記
+- 也可以使用 `4:1` 的簡記方式來產生 (4, 3, 2, 1) 的向量
+
+## 如何生成有序的數值向量 {.columns-2}
+```{r echo=TRUE}
+seq(1, 4)
+seq(1, 9, by = 2) # 間隔為2
+seq(1, 9, length.out = 5) # 分割長度為5
+```
+
+<p>
+### 筆記
+- 除了冒號簡記法外，可以透過`seq`函數生成有規則的數值向量(序列)  
+- 在`seq()` 函數中按 **tab** 鍵觀察有哪些參數可以使用
+- `by` 表示數列間隔，預設為1
+- `length.out` 表示數列長度
+
+
+## 小挑戰
+- 利用簡記法列出 1 ~ 100的數列
+- 利用 `seq` 函數列出偶數數列: 2, 4, 6, 8, 10
+- 觀察 `seq(1, 10, length.out=5)` 的輸出結果
+
+<div class="notes">
+參考解答
+```{r echo=TRUE}
+1:100
+seq(2, 10, by = 2)
+seq(2, 10, length.out = 5)
+seq(1, 10, length.out=5)
+```
+</div>

@@ -1,0 +1,85 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch09：資料整理"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+```{r}
+dat <- read.csv(file = "hsb.csv")
+```
+
+## 排序 (`sort` vs. `order`) 
+- `sort`: 將一數列由小排到大
+- `order`: 回傳數列個元素的大小順序
+```{r echo=TRUE}
+x <- c(1, 5, 3, 7)
+sort(x)
+order(x)
+x[order(x)] # 等價於 sort(x)
+sort(x, decreasing = TRUE) # 由大排到小
+```
+
+## 排序
+`order` 可以處理多欄位的排序
+```{r echo=TRUE}
+df <- data.frame(x=c(1, 1, 3, 3), 
+                 y=c(2, 4, 2, 4))
+df[order(df$x, df$y),]
+df[order(df$y, df$x),]
+```
+
+## 小挑戰
+- 拿高校資料集 (hsb.csv)，用學生的 `id` 對資料表做排序
+- 用學生的`id`, 還有閱讀、寫作、數學、科學的總分 (`read + write + math + science`) 做排序
+
+## 資料轉換 (Recoding Data)
+- `rowSums`：給定資料表，快速計算資料的列總和 (同理有`colSums` 計算欄總和)
+- 利用`$colname` 新增欄位
+- 學習`cut`函數將數值資料轉成類別資料
+```{r echo=TRUE}
+dat$total <- rowSums(dat[,7:10]) # read + write + math + science
+dat$grade <- cut(dat$total,
+  breaks = c(0, 140, 180, 210, 234, 300),
+  labels = c("F", "D", "C", "B", "A"))
+summary(dat[, c("total", "grade")])
+```
+
+## 資料合併
+- `rbind`: 列合併 (rows combine)
+```{r echo=TRUE}
+dat1 <- dat[dat$id<5, c(1, 2, 7:10)]
+dat2 <- dat[dat$id>=5 & dat$id<10, c(1, 2, 7:10)]
+rbind(dat1, dat2)
+```
+
+## 資料合併
+- `cbind`: 行合併 (columns combine), 也可以使用`data.frame`來做欄位合併
+```{r echo=TRUE}
+dat3 <- dat[dat$id<10, 1:2]
+dat4 <- dat[dat$id<10, 7:10]
+cbind(dat3, dat4)
+```

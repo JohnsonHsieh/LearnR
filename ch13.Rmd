@@ -1,0 +1,55 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch13：終章"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+
+## 課程回顧 {.columns-2}
+- 建立 R 的使用環境 (Ch01-02)    
+    - RStudio介面、tab鍵
+- 熟悉 R 語言基礎操作 (Ch03-04)
+    - 向量的運算、`[]`取值、`?`查詢說明
+- 了解 R 語言的物件的結構 (Ch05-07)
+    - 數值、字串、邏輯型態
+    - `data.frame`資料表 <br><br><br>
+
+- 學習 R 語言的資料整理 (Ch08-09)
+    - file path, `read.csv`, `write.csv`
+    - `sort`, `order`, `rbind`, `cbind`
+- 從無到有，完成探索性資料分析 (Ch10-12)
+    - `mean`, `sd`, `summary`, ...
+    - `table`, `melt`, `dcast`
+    - `pie`、`barplot`、`hist`、`plot`
+
+## 繼續學習之路
+- 了解自己的需求，詢問關鍵字與函數
+- [Taiwan R User Group](http://www.meetup.com/Taiwan-R)，mailing list: Taiwan-useR-Group-list@meetup.com
+- [ptt R_Language版](https://www.ptt.cc/bbs/R_Language/index.html)
+- [R軟體使用者論壇](https://groups.google.com/forum/#!forum/taiwanruser)
+- [StackOverflow](http://stackoverflow.com/) 
+- 歡迎來信 johnson@dsp.im 或其他DSP優秀教師多多交流

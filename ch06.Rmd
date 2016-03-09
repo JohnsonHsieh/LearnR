@@ -1,0 +1,72 @@
+---
+title: "R 語言的探索之旅"
+subtitle: "Ch06：特殊資料型態"
+author: "Johnson Ph.D.  (DSP 智庫驅動 資料科學家)"
+output:
+  ioslides_presentation:
+    css: css/dsp.css
+    #logo: img/dsp_logo.png
+    widescreen: yes
+    self_contained: false
+---
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+library(magrittr)
+library(xtable)
+library(dplyr)
+library(ggplot2)
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+fig <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
+          path, size, size)
+}
+fig2 <- function(path, size = 100) {
+  sprintf("<img src='img/%s' style='width: %d%%'></img>", 
+          path, size)
+}
+sys_name <- Sys.info()["sysname"] %>% tolower
+sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
+sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
+```
+## 特殊資料型態
+
+- 特殊的數值型態：時間
+- 處理時間的函數：`as.Date`, `strftime`, `strptime`, `as.POSIXct`, `as.POSIXlt` …
+```{r echo=TRUE}
+Sys.time()
+```
+
+- 特殊的字串型態：類別
+```{r echo=TRUE}
+factor(c("male", "female", "female", "male"))
+```
+
+
+## `factor` 物件簡介
+當一向量變數是類別型變數 (譬如：性別、教育水準) 時，<br>
+在 `R` 語言中以 `factor` 進行定義。
+```{r echo=TRUE}
+# variable gender with 2 "male" entries and 3 "female" entries 
+# rep(x, n) 函數能重複x物件n次
+gender <- c(rep("male",2), rep("female", 3)) 
+gender
+gender <- factor(gender)
+gender
+levels(gender) 
+```
+
+## `factor` 物件簡介2
+
+- 可使用 `as.numeric` 將 `factor` 物件轉換成數值
+- `factor` 函數中有個多的參數可以進行設定
+
+```{r echo=TRUE}
+# 1=female, 2=male internally (alphabetically)
+as.numeric(gender) 
+
+# change vector of labels for the levels
+factor(gender, levels=c("male", "female"), labels=c("M", "F"))
+
+# 類別轉字串
+as.character(gender)
+```
