@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -32,13 +33,19 @@ sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 dat <- read.csv(file = "hsb.csv")
 ```
 
-## 次數列聯表 {.columns-2}
+## 次數列聯表 
+<div style='float:left;width:48%'>
 用`table`計算資料個類別出現的次數
 ```{r echo=TRUE}
 table(dat$sex)
 table(dat$prog)
+```
+</div>
+<div style='float:left;width:48%'>
+```{r echo=TRUE}
 table(dat$race, dat$sex)
 ```
+</div>
 
 ## Long & Wide format
 - Wide format 人習慣看的表格

@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -50,7 +51,8 @@ z <- c(TRUE, FALSE, FALSE, FALSE, TRUE)
 class(x); class(y); class(z)
 ```
 
-## 資料型態的轉換 {.columns-2}
+## 資料型態的轉換
+<div style='float:left;width:48%;'>
 - 向量物件一次只能接受一種型態
 - 在向量中給定多種型態，將會依序自動轉換：字串 > 數值 > 邏輯。
 
@@ -60,16 +62,17 @@ c(174, 52, TRUE)
 c(1.1, 2.4, TRUE, FALSE)
 
 ```
-<br>
+</div>
+<div style='float:left;width:48%;'>
 ```{r echo=TRUE, eval=T}
 c(174, 52, "林志玲") # 數值被轉換成字串
 
 # 所有元素都被轉換成字串
 c("林志玲", 174, 52, TRUE)
 ```
-
-## 資料型態的轉換2 {.columns-2}
-
+</div>
+## 資料型態的轉換2 
+<div style='float:left;width:48%;'>
 - 利用以下函數自行轉換向量型態： `as.character`, `as.numeric`, `as.logical`。
 
 ```{r echo=TRUE, eval=TRUE}
@@ -81,7 +84,8 @@ as.numeric(a1)
 a2 <- c(TRUE, TRUE, FALSE)
 as.numeric(a2)
 ```
-<br>
+</div>
+<div style='float:left;width:48%;'>
 ```{r echo=TRUE, eval=TRUE}
 # 數字轉布林
 a3 <- c(-2, -1, 0, 1, 2) # 只有0會被轉成FALSE
@@ -90,3 +94,4 @@ as.logical(a3)
 # 數字轉字串
 as.character(a3)
 ```
+</div>

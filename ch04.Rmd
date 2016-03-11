@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -28,9 +29,9 @@ sys_name <- Sys.info()["sysname"] %>% tolower
 sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "windows"))]
 sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 ```
-## 在 R 中查詢說明文件 {.columns-2}
-
-各種自救措施
+## 在 R 中查詢說明文件
+<div style='float:left;width:48%'>
+### 各種自救措施
 ```{r echo=TRUE, eval=FALSE}
 help.start()
 ab # 輸入`ab`後 按下tab
@@ -41,14 +42,8 @@ example(abs)
 vignette()
 vignette("Introduction", "Matrix")
 ```
-<br>
-<br>
-<p>
-<br>
-<br>
-<p>
-<p>
-
+</div>
+<div style='float:right;width:48%'>
 ### 筆記
 - help.start: 說明檔首頁
 - 自動完成 (tab鍵)：列出所有`ab`開頭的函數
@@ -57,4 +52,9 @@ vignette("Introduction", "Matrix")
 - apropos : 查詢包含特定關鍵字的函數
 - example : 執行特定函數的使用範例
 - vignette : 查詢R環境中各種介紹文件
+
+</div>
+
+
+
 

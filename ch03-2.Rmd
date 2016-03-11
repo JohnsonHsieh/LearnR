@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -29,7 +30,8 @@ sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "w
 sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 ```
 
-## 數列的運算 {.columns-2}
+## 數列的運算
+<div style='float:left;width:48%;'>
 R的數列運算滿足 **recycling properties**
 ```{r echo=TRUE}
 c(1, 2, 3) * c(2, 2, 2)
@@ -39,10 +41,10 @@ c(1, 2, 3) * c(2, 2, 2)
 
 c(0.5, 1.5, 2.5, 3.5) * c(2, 1)
 ```
+</div>
+<div style='float:left;width:48%'>
+**小挑戰**
 
-<p>
-
-### 小挑戰
 向量的四則運算，請計算以下五位女藝人的BMI
 
 Hint: BMI = 體重 / (身高/100)^2
@@ -58,9 +60,10 @@ weight <- c(52, 39, 42, 46, 48)
 weight/ (height/100)^2
 ```
 </div>
+</div>
 
-## 向量的取值 {.columns-2}
-
+## 向量的取值 
+<div style='float:left;width:48%;'>
 - 在`[ ]` (中括號) 中輸入元素的位置進行取值
 - 使負號 (`-`) 移除給定位置元素 (反向選取)
 
@@ -68,14 +71,20 @@ weight/ (height/100)^2
 x <- c(174, 158, 160, 168, 173)
 x[1]           # 選取第1個位置的元素
 x[c(1, 3)]     # 選取第1, 3個位置的元素
+```
+</div>
+<div style='float:left;width:48%;'>
+```{r echo=TRUE}
 x[c(2, 3, 1)]  # 依序取值
 
 # 在[ ]中使用負號 (-) 做反向選取
 x[-1]
 x[-c(1, 3, 4)]
 ```
+</div>
 
-## 向量的取值2  {.columns-2}
+## 向量的取值2 
+<div style='float:left;width:48%;'>
 給定條件進行取值
 
 - 比較運算子(`>`, `<`, `>=`, `<=`, `==`, `!=`)
@@ -88,7 +97,10 @@ x > 160
 index <- which(x > 160) 
 index 
 x[index]
-
+```
+</div>
+<div style='float:left;width:48%;'>
+```{r echo=TRUE}
 # 指令壓縮，將指令寫在 [ ] 中，以達到縮短程式碼的功效
 x[which(x > 160)]
 
@@ -98,9 +110,10 @@ x[which(x > 160 & x < 175)]
 # 可以省略 which
 x[x > 160 & x < 175]
 ```
+</div>
 
-
-## 向量的取代 {.columns-2}
+## 向量的取代 
+<div style='float:left;width:48%;'>
 - 利用 `[ ]` (中括號) 與 `<-` (箭號) 進行取代與新增元素
 ```{r echo=TRUE}
 x <- c(174, 158, 160, 168, 173)
@@ -111,14 +124,16 @@ x
 x[c(1, 5)] <- 175 
 x
 ```
-<p>
+</div>
+<div style='float:left;width:48%;'>
 ```{r echo=TRUE}
 # 也可以用條件篩選做取代
 x[x > 160] <- 170 # 取代大於160的值為170
 x
 ```
-
-## 向量新增 {.columns-2}
+</div>
+## 向量新增 
+<div style='float:left;width:48%;'>
 可用 `[ ]` (中括號) 與 `<-` (箭號) 進行新增元素
 - `NA` 為系統保留字，表示Not Available / Missing Values
 ```{r echo=TRUE}
@@ -128,8 +143,12 @@ x[6] <- 168
 x
 x[8] <- 147
 x # 未指定的元素值預設為NA
+```
+</div>
+<div style='float:left;width:48%;'>
+```{r echo=TRUE}
 length(x) # 查看向量物件的長度
 x[length(x) + 1] <- 166 # 接續增加新元素
 ```
-
+</div>
 

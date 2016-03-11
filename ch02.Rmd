@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -29,23 +30,21 @@ sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "w
 sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 ```
 
-## 傢俬準備好 {.columns-2}
-
+## 傢俬準備好
+<div style='float:left;width:48%;'>
 ### 環境安裝
 - 主程式：[R](https://www.r-project.org/)（R-3.2.2 以上版本）
 - 編輯界面：[RStudio IDE](https://www.rstudio.com/products/rstudio/)（0.99.473 以上版本）
 - [疑難排解指南](https://github.com/dspim/R/wiki/R-&-RStudio-Troubleshooting-Guide)
-<br>
-<br>
-<br>
+</div>
 
-
+<div style='float:left;width:48%;'>
 ### RStudio 界面說明
 - 程式碼編輯區
 - 命令列區
 - 環境資訊區
 - 檔案系統區
-
+</div>
 
 ## 熟悉 RStudio 的 **命令列** 界面
 ### 程式的**輸入**、**輸出**、**中斷**

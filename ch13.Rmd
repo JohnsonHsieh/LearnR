@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -29,7 +30,8 @@ sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "w
 sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 ```
 
-## 課程回顧 {.columns-2}
+## 課程回顧
+<div style='float:left;width:48%;'>
 - 建立 R 的使用環境 (Ch01-02)    
     - RStudio介面、tab鍵
 - 熟悉 R 語言基礎操作 (Ch03-04)
@@ -37,7 +39,8 @@ sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 - 了解 R 語言的物件的結構 (Ch05-07)
     - 數值、字串、邏輯型態
     - `data.frame`資料表 <br><br><br>
-
+</div>
+<div style='float:left;width:48%;'>
 - 學習 R 語言的資料整理 (Ch08-09)
     - file path, `read.csv`, `write.csv`
     - `sort`, `order`, `rbind`, `cbind`
@@ -45,6 +48,7 @@ sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
     - `mean`, `sd`, `summary`, ...
     - `table`, `melt`, `dcast`
     - `pie`、`barplot`、`hist`、`plot`
+</div>
 
 ## 繼續學習之路
 - 了解自己的需求，詢問關鍵字與函數

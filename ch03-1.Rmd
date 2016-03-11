@@ -7,7 +7,8 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
 ```{r setup, include=FALSE, cache=FALSE}
 library(knitr)
@@ -29,28 +30,25 @@ sys_encode <- c("utf8", "utf8", "big5")[pmatch(sys_name, c("linux", "darwin", "w
 sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 ```
 
-## 敘述句 {.columns-2}
-
+## 敘述句
+<div style='float:left;width:48%'>
 ```{r, echo = TRUE}
 1
 2
 1; 2
 ``` 
-<br>
-<p>
-<br>
-<p>
-<p>
-
+</div>
+<div style='float:left;width:48%'>
 ### 筆記
 - 灰底的區塊為程式碼 (輸入)，[1] 為運算結果 (輸出)
 - 敘述句以**斷行 (Enter)** 或**分號 ( ; )** 作結尾
 - 未完成的敘述句，命令列開頭會變成 `+`
 - 可以用 **Esc** 中斷敘述句
 - R 會把單引號 `'apple'` 或雙引號 `"book"` 所包覆的敘述當成字串
+</div>
 
-## 敘述句2 {.columns-2}
-
+## 敘述句2 
+<div style='float:left;width:48%'>
 ```{r echo=TRUE}
 # 基礎運算
 1 + 2 + 3
@@ -59,11 +57,8 @@ x <- 10
 y <- 4
 (x + y) / 2 # 簡單的公式運算
 ```
-<br>
-<p>
-<p>
-<br>
-
+</div>
+<div style='float:left;width:48%'>
 ### 筆記
 - 基本數學運算符號 (`+`, `-`, `*`, `/`, ...)
 - 空白 (**space**) 不影響程式執行
@@ -71,8 +66,10 @@ y <- 4
 - 井號 (**#**) 表示註解，使得該行不執行運算
 - 在RStudio中，想要一次註解多行可用 **ctrl + shift + c**
 - 在命令列中按 **ctrl + l** 可以清除當前畫面
+</div>
 
-## 最基礎的物件：數值型向量 (數列) {.columns-2}
+## 最基礎的物件：數值型向量 (數列)
+<div style='float:left;width:48%'>
 ```{r echo=TRUE}
 # basic expression of integer vector
 c(1, 2, 3, 4)
@@ -81,28 +78,29 @@ c(1, 2, 3, 4)
 1:4
 4:1
 ```
-<br>
-<p>
-<p>
+</div>
+<div style='float:left;width:48%'>
 ### 筆記
 - 以 `c(...)` 表示 (c 取自combine之意), 元素以逗號分隔。
 - 連續整數向量可以利用 `:` (冒號) 簡記，譬如數列 (1, 2, 3, 4) 在 R 語言中可利用 `1:4` 簡記
 - 也可以使用 `4:1` 的簡記方式來產生 (4, 3, 2, 1) 的向量
+</div>
 
-## 如何生成有序的數值向量 {.columns-2}
+## 如何生成有序的數值向量
+<div style='float:left;width:48%'>
 ```{r echo=TRUE}
 seq(1, 4)
 seq(1, 9, by = 2) # 間隔為2
 seq(1, 9, length.out = 5) # 分割長度為5
 ```
-
-<p>
+</div>
+<div style='float:left;width:48%'>
 ### 筆記
 - 除了冒號簡記法外，可以透過`seq`函數生成有規則的數值向量(序列)  
 - 在`seq()` 函數中按 **tab** 鍵觀察有哪些參數可以使用
 - `by` 表示數列間隔，預設為1
 - `length.out` 表示數列長度
-
+</div>
 
 ## 小挑戰
 - 利用簡記法列出 1 ~ 100的數列

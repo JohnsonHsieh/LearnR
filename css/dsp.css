@@ -1,4 +1,4 @@
-﻿.title-slide {
+.title-slide {
   background-color: #FFFFFF; /* #EDE0CF; ; #CA9F9D*/
   background-image: url('../img/dsp-front-cover.png'); 
   background-repeat:no-repeat; 
@@ -120,20 +120,29 @@ b, strong {
     color: #5F5F5F;
 }
 
+
 pre {
     font-family: "Source Code Pro","Courier New",monospace;
     font-size: 20px;
     line-height: 28px;
     letter-spacing: -1px;
     margin-bottom: 12px;
-    width: 106%;
-    left: -60px;
+    width: 98%;
+    left: 0px;
     position: relative;
     box-sizing: border-box;
-    padding: 5px 0px 5px 60px;
-  white-space: pre-wrap; /* css-3 */
-  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-  white-space: -pre-wrap; /* Opera 4-6 */
-  white-space: -o-pre-wrap; /* Opera 7 */
-  word-wrap: break-word; /* Internet Explorer 5.5+ */
+    padding: 5px 10px 5px 5px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    margin: 5px 10px 5px 0px;
+    
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
+

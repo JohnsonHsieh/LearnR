@@ -7,15 +7,16 @@ output:
     css: css/dsp.css
     #logo: img/dsp_logo.png
     widescreen: yes
-    self_contained: false
+    self_contained: true
+    lib_dir: dsp-ioslides
 ---
-```{r setup, include=FALSE, cache=FALSE}
+```{r setup, include=FALSE}
 library(knitr)
 library(magrittr)
 library(xtable)
 library(dplyr)
 library(ggplot2)
-opts_chunk$set(echo = FALSE, cache=TRUE, comment="", cache.path = ".cache-EDA/")
+opts_chunk$set(echo = FALSE, cache=TRUE, comment="")
 fig <- function(path, size = 100) {
   sprintf("<img src='img/%s' style='max-width: %d%%;max-height: %d%%'></img>", 
           path, size, size)
@@ -32,16 +33,19 @@ sessionInfo() %>% capture.output %>% cat(file = "sessionInfo.log", sep = "\n")
 dat <- read.csv(file = "hsb.csv")
 ```
 
-## 圓餅圖與長條圖 {.columns-2}
+## 圓餅圖與長條圖
+<div style='float:left;width:48%;'>
 圓餅圖：`pie`
 ```{r echo=TRUE, fig.width=4.5}
 pie(sort(table(dat$race), decreasing = TRUE))
 ```
-
+</div>
+<div style='float:left;width:48%;'>
 長條圖：`barplot`
 ```{r echo=TRUE, fig.width=4.5}
 barplot(sort(table(dat$prog), decreasing = TRUE))
 ```
+</div>
 
 ## 直方圖 (Histograms)
 ```{r echo=TRUE}
@@ -63,11 +67,14 @@ hist(dat$read, breaks=10, col="lightblue", prob=TRUE, main="bw=1")
 lines(density(dat$read, bw=1), col=2, lwd=2)
 ```
 
-## 散佈圖 {.columns-2}
+## 散佈圖 
+<div style='float:left;width:48%'>
 ```{r echo=TRUE, fig.width=4.5}
 plot(x=dat$write, y=dat$science, pch=19, col=2)
 ```
-
+</div>
+<div style='float:left;width:48%'>
 ```{r echo=TRUE, fig.width=4.5}
 plot(x=dat$math, y=dat$science, xlab="math", ylab="science")
 ```
+</div>
